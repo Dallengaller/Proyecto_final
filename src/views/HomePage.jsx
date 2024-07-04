@@ -7,6 +7,7 @@ const HomePage = () => {
         Pagina principal
       </h1>
       <h6> Aca se agregaran los items </h6>
+      <p>Probando actualizaciones en deploy</p>
     </Container>
   );
 };
