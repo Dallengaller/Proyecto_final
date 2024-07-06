@@ -3,14 +3,19 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Card, Row, Col, Button } from 'react-bootstrap';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import { fetchMovieDetails } from '../services/movieApi';
+import { useFavorites } from '../context/FavoritesContext';
+import { useNavigate } from 'react-router-dom';
 
 const TitleDetails = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { addFavorite, removeFavorite, favorites } = useFavorites();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getMovieDetails = async () => {
@@ -26,6 +31,18 @@ const TitleDetails = () => {
 
     getMovieDetails();
   }, [id]);
+
+  const handleFavoriteClick = () => {
+    if (!movie) return; // Just a precaution
+
+    if (favorites.some(fav => fav.imdbID === movie.imdbID)) {
+      removeFavorite(movie.imdbID);
+    } else {
+      addFavorite(movie);
+    }
+  };
+
+  const isFavorite = movie && favorites.some(fav => fav.imdbID === movie.imdbID);
 
   if (loading) return <p>Cargando detalles de la película...</p>;
   if (error) return <p>{error}</p>;
@@ -52,7 +69,11 @@ const TitleDetails = () => {
             </Card>
             <div className="d-flex justify-content-between align-items-center mb-3">
               <div className="d-flex align-items-center">
-                <FavoriteBorderIcon className="text-muted mr-2" />
+                {isFavorite ? (
+                  <FavoriteIcon className="text-danger mr-2" onClick={handleFavoriteClick} style={{ cursor: 'pointer' }} />
+                ) : (
+                  <FavoriteBorderIcon className="text-muted mr-2" onClick={handleFavoriteClick} style={{ cursor: 'pointer' }} />
+                )}
                 <ChatBubbleOutlineOutlinedIcon className="text-muted mr-2" />
               </div>
               <Button variant="danger">Comprar</Button>
@@ -65,5 +86,3 @@ const TitleDetails = () => {
 };
 
 export default TitleDetails;
-
-

@@ -3,11 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { Container, Card, ListGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { fetchMovies } from '../services/movieApi';
+import { useFavorites } from '../context/FavoritesContext';
+
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { addToFavorites } = useFavorites();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,7 +29,6 @@ const HomePage = () => {
   }, []);
 
   const handleVerMas = (id) => {
-    console.log(`Navigating to movie with ID: ${id}`);
     navigate(`/title/${id}`);
   };
 
@@ -38,7 +40,6 @@ const HomePage = () => {
       <div className="d-flex flex-wrap justify-content-center">
         {movies.map((movie) => (
           <Card key={movie.imdbID} style={{ width: '18rem', margin: '10px' }}>
-            
             <Card.Img
               variant="top"
               src={movie.Poster}
@@ -56,6 +57,8 @@ const HomePage = () => {
               <ListGroup className="list-group-flush">
                 <ListGroup.Item style={{ textAlign: 'center' }}>Año: {movie.Year}</ListGroup.Item>
               </ListGroup>
+              <div style={{ textAlign: 'center', marginTop: '10px' }}>
+              </div>
             </Card.Body>
           </Card>
         ))}
@@ -65,4 +68,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
