@@ -1,3 +1,4 @@
+// src/views/Favoritos.jsx
 import { Container } from "react-bootstrap";
 
 const Favoritos = () => {
@@ -11,3 +12,4 @@ const Favoritos = () => {
   );
 };
 export default Favoritos;
+

@@ -1,3 +1,4 @@
+//src/components/Navbar.jsx
 import { Container, Navbar, Nav, Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
