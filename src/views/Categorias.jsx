@@ -1,3 +1,5 @@
+// src/views/Categorias.jsx
+
 import { Container } from "react-bootstrap";
 
 const Categorias = () => {
