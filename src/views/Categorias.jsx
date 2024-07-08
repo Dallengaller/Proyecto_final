@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap";
 
 const Categorias = () => {
   return (
-    <Container className="text-center">
+    <Container className="text-center text-white">
       <h1 className="pt-5">
         Esta es la pagina de categorias
       </h1>

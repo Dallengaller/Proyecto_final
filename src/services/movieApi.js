@@ -1,4 +1,4 @@
-// // src/services/movieApi.js
+// src/services/movieApi.js
 import axios from 'axios';
 
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -33,3 +33,5 @@ export const fetchMovieDetails = async (id) => {
     throw error;
   }
 };
+
+

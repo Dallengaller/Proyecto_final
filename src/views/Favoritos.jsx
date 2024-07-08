@@ -18,7 +18,7 @@ const Favoritos = () => {
 
   return (
     <Container className="text-center">
-      <h1 className="pt-5">Favoritos</h1>
+      <h1 className="pt-5 text-white">Favoritos</h1>
       <div className="d-flex flex-wrap justify-content-center">
         {favorites.map((movie) => (
           <Card key={movie.imdbID} style={{ width: '18rem', margin: '10px' }}>
