@@ -1,5 +1,6 @@
 # Se ha creado una app en react.
 # La app obtiene los datos de peliculas y series de la api desde el sitio OMDB.
+# Se ha creado una variable de enterno para guardar las api_key.
 # Para ingresar al modo privado: prueba@mail.com / clave123
 # Se ha implementado
 # 1 - Un log in y log out temporal (aun revisando redireccionamiento)
