@@ -1,21 +1,20 @@
 // src/views/TitleDetails.jsx
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Card, Row, Col, Button } from 'react-bootstrap';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import { fetchMovieDetails } from '../services/movieApi';
 import { useFavorites } from '../context/FavoritesContext';
-import { useNavigate } from 'react-router-dom';
 
 const TitleDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { addFavorite, removeFavorite, addToCart, favorites } = useFavorites();
-  const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
@@ -47,8 +46,11 @@ const TitleDetails = () => {
 
   const handleAddToCart = () => {
     if (!movie) return; 
-
     addToCart(movie); 
+  };
+
+  const handleCommentsClick = () => {
+    navigate('/comentarios');
   };
 
   if (loading) return <p>Cargando detalles de la película...</p>;
@@ -82,7 +84,7 @@ const TitleDetails = () => {
                   ) : (
                     <FavoriteBorderIcon className="text-muted mr-2" onClick={handleFavoriteClick} style={{ cursor: 'pointer' }} />
                   )}
-                  <ChatBubbleOutlineOutlinedIcon className="text-dark mr-2" />
+                  <ChatBubbleOutlineOutlinedIcon className="text-dark mr-2" onClick={handleCommentsClick} style={{ cursor: 'pointer' }} />
                 </div>
                 <Button variant="danger" onClick={handleAddToCart}>
                   Comprar

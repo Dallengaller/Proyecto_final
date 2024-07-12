@@ -17,4 +17,6 @@
 
 # Creando Backend.
 # Se ha creado un servidor que inicia con node index.js 
-# 
+# Se ha creado una base de datos para la tabla usuarios y se ha conectado a la app.
+# Se ha agregado la logica para que los usuarios se registren y puedan hacer login dentro del sitio.
+# Se ha creado seccion comentarios...

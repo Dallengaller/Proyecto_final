@@ -8,7 +8,9 @@ import Categorias from './views/Categorias';
 import Carrito from './views/Carrito';
 import NotFound from './views/NotFound';
 import TitleDetails from './views/TitleDetails';
+import Comentarios from './views/Comentarios';
 import Login from './components/Login';
+import Register from './views/Register';
 import PrivatePage from './components/PrivatePage';
 import useAuth from './hooks/useAuth';
 import { FavoritesProvider } from './context/FavoritesContext';
@@ -25,7 +27,10 @@ const App = () => {
         <Route path="/categorias" element={isAuthenticated() ? <Categorias /> : <Login />} />
         <Route path="/carrito" element={isAuthenticated() ? <Carrito /> : <Login />} />
         <Route path="/title/:id" element={isAuthenticated() ? <TitleDetails /> : <Login />} />
+        <Route path="/comentarios" element={isAuthenticated() ? <Comentarios /> : <Login />} />
         <Route path="/private" element={isAuthenticated() ? <PrivatePage /> : <Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </FavoritesProvider>

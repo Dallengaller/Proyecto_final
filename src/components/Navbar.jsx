@@ -1,4 +1,4 @@
-// // src/components/Navbar.jsx
+// src/components/Navbar.jsx
 import React, { useState, useEffect } from 'react';
 import { Container, Navbar, Nav, Form, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
@@ -13,14 +13,14 @@ const Navigation = () => {
 
   useEffect(() => {
     const delayedSearch = setTimeout(() => {
-      if (searchTerm.trim()) {
+      if (searchTerm.trim() && isAuthenticated()) {
         fetchResults(searchTerm);
       } else {
         setSearchResults([]);
       }
     }, 300);
     return () => clearTimeout(delayedSearch);
-  }, [searchTerm]);
+  }, [searchTerm, isAuthenticated]);
 
   const fetchResults = async (term) => {
     try {
@@ -44,7 +44,7 @@ const Navigation = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/'); // Revisar direccionamiento a pagina Log in
+    navigate('/login'); // Redirige a la página de inicio de sesión
   };
 
   return (
@@ -55,23 +55,11 @@ const Navigation = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
-          <Nav
-            className="mx-auto my-2 my-lg-0"
-            style={{ maxHeight: '100px' }}
-            navbarScroll
-          >
-            <Nav.Link as={Link} to="/" className="text-white ms-3 text-decoration-none">
-              🏠 Home
-            </Nav.Link>
-            <Nav.Link as={Link} to="/favoritos" className="text-white ms-3 text-decoration-none">
-              Favoritos
-            </Nav.Link>
-            <Nav.Link as={Link} to="/categorias" className="text-white ms-3 text-decoration-none">
-              Categorías
-            </Nav.Link>
-            <Nav.Link as={Link} to="/carrito" className="text-white ms-3 text-decoration-none">
-              Carrito
-            </Nav.Link>
+          <Nav className="mx-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
+            <Nav.Link as={Link} to="/" className="text-white ms-3 text-decoration-none">🏠 Home</Nav.Link>
+            <Nav.Link as={Link} to="/favoritos" className="text-white ms-3 text-decoration-none">Favoritos</Nav.Link>
+            <Nav.Link as={Link} to="/categorias" className="text-white ms-3 text-decoration-none">Categorías</Nav.Link>
+            <Nav.Link as={Link} to="/carrito" className="text-white ms-3 text-decoration-none">Carrito</Nav.Link>
           </Nav>
           <Form className="position-relative">
             <Form.Control
@@ -83,7 +71,6 @@ const Navigation = () => {
               className="me-2"
               aria-label="Buscar"
             />
-           
             {searchResults.length > 0 && (
               <ul className="list-group position-absolute bg-white w-100 rounded shadow mt-1" style={{ zIndex: 100 }}>
                 {searchResults.map((movie) => (
@@ -95,13 +82,12 @@ const Navigation = () => {
             )}
           </Form>
           {isAuthenticated() ? (
-            <Button variant="outline-light" className="ms-3" onClick={handleLogout}>
-              Salir
-            </Button>
+            <Button variant="outline-light" className="ms-3" onClick={handleLogout}>Salir</Button>
           ) : (
-            <Nav.Link as={Link} to="/login" className="text-white ms-3 text-decoration-none">
-              Iniciar Sesión
-            </Nav.Link>
+            <>
+              <Nav.Link as={Link} to="/login" className="text-white ms-3 text-decoration-none">Iniciar Sesión</Nav.Link>
+              <Nav.Link as={Link} to="/register" className="text-white ms-3 text-decoration-none">Registrarse</Nav.Link>
+            </>
           )}
         </Navbar.Collapse>
       </Container>
