@@ -4,7 +4,7 @@ import cors from 'cors';
 import pool from './src/database/dbconfig.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-
+import crearTitulo from './src/controllers/tituloController.js'; 
 const app = express();
 const SECRET_KEY = 'secret_key_jwt';
 
@@ -44,8 +44,6 @@ const verificarCredenciales = async (email, password) => {
 };
 
 app.post('/usuarios', async (req, res) => {
-  console.log('Consulta recibida en /usuarios (POST):', req.method, req.originalUrl);
-  
   const { nombre, email, password } = req.body;
 
   if (!nombre || !email || !password) {
@@ -53,7 +51,6 @@ app.post('/usuarios', async (req, res) => {
   }
 
   try {
-    // Verificar si el usuario ya existe
     const userCheck = await pool.query('SELECT * FROM usuarios WHERE email = $1', [email]);
     if (userCheck.rowCount > 0) {
       return res.status(409).json({ message: 'El usuario ya existe' });
@@ -63,7 +60,13 @@ app.post('/usuarios', async (req, res) => {
     const query = 'INSERT INTO usuarios (nombre, email, password) VALUES ($1, $2, $3) RETURNING *';
     const values = [nombre, email, hashedPassword];
     const result = await pool.query(query, values);
-    res.status(201).json(result.rows[0]);
+    
+    const newUser = result.rows[0];
+
+    const perfilQuery = 'INSERT INTO perfil (user_id) VALUES ($1) RETURNING *';
+    await pool.query(perfilQuery, [newUser.id]);
+
+    res.status(201).json(newUser);
   } catch (err) {
     console.error('Error al registrar el usuario:', err);
     res.status(500).json({ message: 'Error al registrar el usuario' });
@@ -71,8 +74,6 @@ app.post('/usuarios', async (req, res) => {
 });
 
 app.get('/usuarios', authenticateToken, async (req, res) => {
-  console.log('Consulta recibida en /usuarios (GET):', req.method, req.originalUrl);
-  
   try {
     const query = 'SELECT * FROM usuarios WHERE email = $1';
     const values = [req.user.email];
@@ -90,8 +91,6 @@ app.get('/usuarios', authenticateToken, async (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
-  console.log('Consulta recibida en /login:', req.method, req.originalUrl);
-
   try {
     const { email, password } = req.body;
     const user = await verificarCredenciales(email, password);
@@ -103,32 +102,8 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.get("/home", (req, res) => {
-  res.send("Hello World Express Js");
-});
+app.post('/api/titulo', crearTitulo); 
 
-// Ruta para verificar conexión a la base de datos
-app.get('/test-db', async (req, res) => {
-  console.log('Consulta recibida en /test-db:', req.method, req.originalUrl);
-  try {
-    const result = await pool.query('SELECT version()');
-    res.send(`Versión del servidor PostgreSQL: ${result.rows[0].version}`);
-  } catch (err) {
-    console.error('Error al ejecutar la consulta:', err);
-    res.status(500).send('Error al conectar con la base de datos');
-  }
-});
-
-// Ruta para manejar errores 404 (ruta no encontrada)
-app.use((req, res, next) => {
-  res.status(404).json({ error: "Ruta no encontrada" });
-});
-
-// Middleware para manejar errores globales
-app.use((err, req, res, next) => {
-  console.error("Error no manejado:", err);
-  res.status(500).json({ error: "Error interno del servidor" });
-});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

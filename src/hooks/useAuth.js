@@ -5,18 +5,22 @@ import axios from 'axios';
 const useAuth = () => {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  const login = () => {
-    localStorage.setItem('loggedIn', 'true');
-    setLoggedIn(true);
+  const login = async (email, password) => {
+    try {
+      const response = await axios.post('http://localhost:3000/login', { email, password });
+      localStorage.setItem('token', response.data.token);
+    } catch (error) {
+      throw new Error('Credenciales inválidas');
+    }
   };
 
   const logout = () => {
-    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('token');
     setLoggedIn(false);
   };
 
   const isAuthenticated = () => {
-    return localStorage.getItem('loggedIn') === 'true';
+    return localStorage.getItem('token') !== null;
   };
 
   const register = async (name, email, password) => {

@@ -23,6 +23,13 @@ const TitleDetails = () => {
         const data = await fetchMovieDetails(id);
         setMovie(data);
         setIsFavorite(favorites.some(fav => fav.imdbID === data.imdbID));
+      
+        
+        const precioAleatorio = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000;
+
+        
+        await guardarTituloEnBaseDeDatos(data.Title, precioAleatorio);
+        
         setLoading(false);
       } catch (error) {
         setError('Error fetching movie details');
@@ -33,20 +40,39 @@ const TitleDetails = () => {
     getMovieDetails();
   }, [id, favorites]);
 
+  const guardarTituloEnBaseDeDatos = async (nombre, precio) => {
+    try {
+      const response = await fetch('http://localhost:3000/api/titulo', { 
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ nombre, precio }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al guardar el título en la base de datos');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Error al guardar el título. Intente de nuevo más tarde.');
+    }
+  };
+
   const handleFavoriteClick = () => {
-    if (!movie) return; 
+    if (!movie) return;
 
     if (isFavorite) {
       removeFavorite(movie.imdbID);
     } else {
       addFavorite(movie);
     }
-    setIsFavorite(!isFavorite); 
+    setIsFavorite(!isFavorite);
   };
 
   const handleAddToCart = () => {
-    if (!movie) return; 
-    addToCart(movie); 
+    if (!movie) return;
+    addToCart(movie);
   };
 
   const handleCommentsClick = () => {
@@ -85,6 +111,9 @@ const TitleDetails = () => {
                     <FavoriteBorderIcon className="text-muted mr-2" onClick={handleFavoriteClick} style={{ cursor: 'pointer' }} />
                   )}
                   <ChatBubbleOutlineOutlinedIcon className="text-dark mr-2" onClick={handleCommentsClick} style={{ cursor: 'pointer' }} />
+                </div>
+                <div className="d-flex align-items-center mr-3">
+                  <p className="mb-0">Precio $ {Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000}</p>
                 </div>
                 <Button variant="danger" onClick={handleAddToCart}>
                   Comprar

@@ -20,3 +20,5 @@
 # Se ha creado una base de datos para la tabla usuarios y se ha conectado a la app.
 # Se ha agregado la logica para que los usuarios se registren y puedan hacer login dentro del sitio.
 # Se ha creado seccion comentarios...
+# Se ha implenetando una logica para generar precios a los titulos.
+# Los titulos y vaolres se agregan a la base de datos.
