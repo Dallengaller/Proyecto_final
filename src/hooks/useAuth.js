@@ -7,8 +7,9 @@ const useAuth = () => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('http://localhost:3000/login', { email, password });
+      const response = await axios.post('http://localhost:3000/usuarios/login', { email, password });
       localStorage.setItem('token', response.data.token);
+      setLoggedIn(true);
     } catch (error) {
       throw new Error('Credenciales inválidas');
     }
@@ -40,3 +41,5 @@ const useAuth = () => {
 };
 
 export default useAuth;
+
+////////////////////////////////////

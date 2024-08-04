@@ -1,36 +1,65 @@
 // src/context/FavoritesContext.jsx
-import React, { createContext, useState, useContext } from 'react';
-
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import axios from 'axios';
 
 export const FavoritesContext = createContext();
 
-
 export const FavoritesProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
-  const [cartItems, setCartItems] = useState([]);
 
-  const addFavorite = (movie) => {
-    setFavorites((prevFavorites) => [...prevFavorites, movie]);
+  const fetchFavorites = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/favorites', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      // Verifica la estructura de los datos aquí
+      console.log('Favorites fetched:', response.data);
+
+      setFavorites(response.data);
+    } catch (error) {
+      console.error('Error fetching favorites:', error);
+    }
   };
 
-  const removeFavorite = (movieId) => {
-    setFavorites((prevFavorites) =>
-      prevFavorites.filter((movie) => movie.imdbID !== movieId)
-    );
+  useEffect(() => {
+    fetchFavorites();
+  }, []);
+
+  const addFavorite = async (movie) => {
+    try {
+      await axios.post('http://localhost:3000/favorites', 
+        { nombre: movie.Title, poster: movie.Poster, movieID: movie.movieID }, 
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      );
+      // Refresca los favoritos después de agregar uno nuevo
+      fetchFavorites();
+    } catch (error) {
+      console.error('Error adding favorite:', error);
+    }
   };
 
-  const addToCart = (movie) => {
-    setCartItems((prevItems) => [...prevItems, movie]);
-  };
-
-  const removeFromCart = (movieId) => {
-    setCartItems((prevItems) =>
-      prevItems.filter((movie) => movie.imdbID !== movieId)
-    );
+  const removeFavorite = async (movieID) => {
+    try {
+      await axios.delete(`http://localhost:3000/favorites/${movieID}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      // Refresca los favoritos después de eliminar uno
+      fetchFavorites();
+    } catch (error) {
+      console.error('Error removing favorite:', error);
+    }
   };
 
   return (
-    <FavoritesContext.Provider value={{ favorites, addFavorite, removeFavorite, cartItems, addToCart, removeFromCart }}>
+    <FavoritesContext.Provider value={{ favorites, addFavorite, removeFavorite }}>
       {children}
     </FavoritesContext.Provider>
   );

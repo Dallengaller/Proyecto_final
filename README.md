@@ -22,3 +22,6 @@
 # Se ha creado seccion comentarios...
 # Se ha implenetando una logica para generar precios a los titulos.
 # Los titulos y vaolres se agregan a la base de datos.
+
+#favoritos
+favorito

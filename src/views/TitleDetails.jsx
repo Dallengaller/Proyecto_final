@@ -7,6 +7,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import { fetchMovieDetails } from '../services/movieApi';
 import { useFavorites } from '../context/FavoritesContext';
+import { useCart } from '../context/CartContext';
 
 const TitleDetails = () => {
   const { id } = useParams();
@@ -14,21 +15,39 @@ const TitleDetails = () => {
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { addFavorite, removeFavorite, addToCart, favorites } = useFavorites();
+  const { addFavorite, removeFavorite, favorites } = useFavorites();
+  const { addToCart } = useCart();
   const [isFavorite, setIsFavorite] = useState(false);
+  const [precio, setPrecio] = useState(null);
 
   useEffect(() => {
     const getMovieDetails = async () => {
       try {
         const data = await fetchMovieDetails(id);
         setMovie(data);
-        setIsFavorite(favorites.some(fav => fav.imdbID === data.imdbID));
-      
-        
-        const precioAleatorio = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000;
 
-        
-        await guardarTituloEnBaseDeDatos(data.Title, precioAleatorio);
+        // Verifica si el título está en los favoritos
+        setIsFavorite(favorites.some(fav => fav.movie_id === data.imdbID));
+
+        const response = await fetch(`http://localhost:3000/api/titulo/${data.Title}`);
+        if (response.ok) {
+          const titulo = await response.json();
+          setPrecio(titulo.precio);
+        } else {
+          const precioAleatorio = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000;
+          const guardarResponse = await fetch('http://localhost:3000/api/titulo', { 
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ nombre: data.Title, precio: precioAleatorio, movie_id: data.imdbID }),  // Agregar movie_id
+          });
+          if (guardarResponse.ok) {
+            setPrecio(precioAleatorio);
+          } else {
+            throw new Error('Error al guardar el título en la base de datos');
+          }
+        }
         
         setLoading(false);
       } catch (error) {
@@ -40,25 +59,6 @@ const TitleDetails = () => {
     getMovieDetails();
   }, [id, favorites]);
 
-  const guardarTituloEnBaseDeDatos = async (nombre, precio) => {
-    try {
-      const response = await fetch('http://localhost:3000/api/titulo', { 
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ nombre, precio }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Error al guardar el título en la base de datos');
-      }
-    } catch (error) {
-      console.error(error);
-      alert('Error al guardar el título. Intente de nuevo más tarde.');
-    }
-  };
-
   const handleFavoriteClick = () => {
     if (!movie) return;
 
@@ -67,12 +67,14 @@ const TitleDetails = () => {
     } else {
       addFavorite(movie);
     }
+    // Actualiza el estado isFavorite después de la acción
     setIsFavorite(!isFavorite);
   };
 
   const handleAddToCart = () => {
-    if (!movie) return;
-    addToCart(movie);
+    if (!movie || precio === null) return;
+    console.log('Adding to cart:', movie); // <-- Aquí añadimos el console.log
+    addToCart({ ...movie, precio }); // Incluye el precio en el objeto
   };
 
   const handleCommentsClick = () => {
@@ -99,24 +101,32 @@ const TitleDetails = () => {
                   <p><strong>Sinopsis:</strong> {movie.Plot}</p>
                   <p><strong>Año:</strong> {movie.Year}</p>
                   <p><strong>Duración:</strong> {movie.Runtime}</p>
-                  <p><strong>Idiomas:</strong> {movie.Language}</p>
-                  <p><strong>Rating:</strong> {movie.imdbRating}</p>
+                  <p><strong>Género:</strong> {movie.Genre}</p>
+                  <p><strong>Director:</strong> {movie.Director}</p>
+                  <p><strong>Actores:</strong> {movie.Actors}</p>
+                  <p><strong>Precio:</strong> ${precio}</p>
                 </Card.Body>
               </Card>
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <div className="d-flex align-items-center">
-                  {isFavorite ? (
-                    <FavoriteIcon className="text-danger mr-2" onClick={handleFavoriteClick} style={{ cursor: 'pointer' }} />
-                  ) : (
-                    <FavoriteBorderIcon className="text-muted mr-2" onClick={handleFavoriteClick} style={{ cursor: 'pointer' }} />
-                  )}
-                  <ChatBubbleOutlineOutlinedIcon className="text-dark mr-2" onClick={handleCommentsClick} style={{ cursor: 'pointer' }} />
-                </div>
-                <div className="d-flex align-items-center mr-3">
-                  <p className="mb-0">Precio $ {Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000}</p>
-                </div>
-                <Button variant="danger" onClick={handleAddToCart}>
-                  Comprar
+              <div className="d-flex justify-content-between align-items-center">
+                <Button 
+                  variant={isFavorite ? 'danger' : 'outline-primary'} 
+                  onClick={handleFavoriteClick} 
+                  aria-label={isFavorite ? 'Eliminar de favoritos' : 'Agregar a favoritos'}
+                >
+                  {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                  {isFavorite ? 'Eliminar de Favoritos' : 'Agregar a Favoritos'}
+                </Button>
+                <Button 
+                  variant="primary" 
+                  onClick={handleAddToCart}
+                >
+                  Añadir al Carrito
+                </Button>
+                <Button 
+                  variant="secondary" 
+                  onClick={handleCommentsClick}
+                >
+                  <ChatBubbleOutlineOutlinedIcon /> Comentarios
                 </Button>
               </div>
             </Col>
