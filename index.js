@@ -33,7 +33,7 @@ import tituloRoutes from './src/routes/tituloRoutes.js';
 import favoritesRoutes from './src/routes/favoritesRoutes.js';
 import cartRoutes from './src/routes/cartRoutes.js';
 import comentariosRouter from './src/routes/comentariosRoutes.js';
-import { authenticateToken } from '../Proyecto_final/src/middleware/authenticateToken.js';
+import { authenticateToken } from './src/middleware/authenticateToken.js';
 
 const app = express();
 
