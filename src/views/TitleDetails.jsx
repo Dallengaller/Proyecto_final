@@ -29,13 +29,13 @@ const TitleDetails = () => {
         // Verifica si el título está en los favoritos
         setIsFavorite(favorites.some(fav => fav.movie_id === data.imdbID));
 
-        const response = await fetch(`http://localhost:3000/api/titulo/${data.Title}`);
+        const response = await fetch(`http://https://proyecto-final-2eg7.onrender.com/api/titulo/${data.Title}`);
         if (response.ok) {
           const titulo = await response.json();
           setPrecio(titulo.precio);
         } else {
           const precioAleatorio = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000;
-          const guardarResponse = await fetch('http://localhost:3000/api/titulo', { 
+          const guardarResponse = await fetch('http://https://proyecto-final-2eg7.onrender.com/api/titulo', { 
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
