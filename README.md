@@ -15,16 +15,21 @@
 
 # Creando Backend.
 # Se ha creado un usuario de pruebas
-# prueba@mail.com / prueba123
+# Prueba@mail.com / prueba123
 # Se ha creado un servidor que inicia con node index.js 
 # Se ha creado una base de datos para la tabla usuarios y se ha conectado a la app.
 # Se ha agregado la logica para que los usuarios se registren y puedan hacer login dentro del sitio.
 # Se ha creado seccion comentarios...
 # Se ha implenetando una logica para generar precios a los titulos.
 # Los titulos y vaolres se agregan a la base de datos.
-<<<<<<< HEAD
 
-#favoritos
-favorito
-=======
->>>>>>> 2fdd4fa09999a7546e8b8b533fcaf8c55e527474
+# Conexion Base de datos.
+# La app conecta con la base de datos, se pueden registrar usuarios y estos mismos pueden loguearse.
+# usuario prueba: daniel@mail.com / prueba123
+# Se ha agregado la funcion de favoritos en la BD.
+# Se ha agragado un carrito de compras con funcion dinamica, calcula el total y recibe un mensaje de compra exitosa.
+
+# Se ha hecho deploy del frontend, backend y base de datos
+# Se ha integrado la aplicacion.
+
+# Se esta trabajando en mejorar el diseno e implementacion de comentarios.

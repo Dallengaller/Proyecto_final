@@ -4,8 +4,17 @@ import { agregarComentario, obtenerComentarios } from '../controllers/comentario
 
 const router = express.Router();
 
-// router.post('/', agregarComentario);
-router.post('/:id', agregarComentario);
-router.get('/:id', obtenerComentarios);
+// Middleware para validar el parámetro :id
+const validarId = (req, res, next) => {
+  const id = req.params.id;
+  if (!id || isNaN(id) || id <= 0) {
+    return res.status(400).json({ message: 'ID inválido' });
+  }
+  next();
+};
+
+router.post('/:id', validarId, agregarComentario);
+router.get('/:id', validarId, obtenerComentarios);
+router.get('/:id/comentario/:comentarioId', validarId, obtenerComentarios);
 
 export default router;

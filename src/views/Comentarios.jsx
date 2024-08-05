@@ -5,15 +5,19 @@ import { useParams } from 'react-router-dom';
 import { useComentarios } from '../context/ComentariosContext';
 
 const Comentarios = () => {
+  // const { movie_id } = useParams();
   const { id } = useParams();
+
   const { comentarios, addComentario, fetchComentarios } = useComentarios();
   const [nuevoComentario, setNuevoComentario] = useState('');
   const [mensaje, setMensaje] = useState('');
 
   // useEffect(() => {
-  //   fetchComentarios(id);
-  // }, [id, fetchComentarios]);
-
+  //   if (movie_id) {
+  //     fetchComentarios(movie_id);
+  //   }
+  // }, [movie_id, fetchComentarios])
+  
   useEffect(() => {
     if (id) {
       fetchComentarios(id);
@@ -26,12 +30,13 @@ const Comentarios = () => {
     if (!nuevoComentario) return;
 
     try {
-      const response = await fetch('http://localhost:3000/api/comentarios/${id}', {
+      const url = `http://localhost:3000/api/comentarios/${id}`;
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ titulo_id: id, comentario: nuevoComentario }),
+        body: JSON.stringify({ movie_id: id, comentario: nuevoComentario }),
       });
 
       if (response.ok) {
@@ -47,7 +52,6 @@ const Comentarios = () => {
       setMensaje('Error al agregar el comentario');
     }
   };
-
   return (
     <Container className="py-4">
       <h2 className="text-center text-white mb-4">Comentarios</h2>
@@ -69,7 +73,7 @@ const Comentarios = () => {
       <ListGroup>
         {comentarios.length > 0 ? (
           comentarios.map((comentario) => (
-            <ListGroup.Item key={comentario.id}>
+            <ListGroup.Item key={comentario.comentario_id}>
               {comentario.comentario}
             </ListGroup.Item>
           ))

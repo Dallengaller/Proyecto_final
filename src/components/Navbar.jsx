@@ -51,7 +51,7 @@ const Navigation = () => {
     <Navbar bg="warning" variant="light" expand="lg" className="bg-body-primary position-relative">
       <Container fluid>
         <Navbar.Brand as={Link} to="/">
-          Proyecto Final Logo
+          Movies & Series - DL
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">

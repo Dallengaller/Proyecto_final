@@ -77,10 +77,20 @@ const TitleDetails = () => {
     addToCart({ ...movie, precio }); // Incluye el precio en el objeto
   };
 
-  const handleCommentsClick = () => {
-    navigate('/comentarios');
-  };
+  // const handleCommentsClick = () => {
+  //   navigate('/comentarios');
+  // };
 
+  // const handleCommentsClick = () => {
+  //   if (movie) {
+  //     navigate(`/comentarios/${movie.imdbID}`);
+  //   }
+  // };
+
+  const handleCommentsClick = () => {
+    navigate(`/comentarios/${id}`);
+  };
+  
   if (loading) return <p>Cargando detalles de la película...</p>;
   if (error) return <p>{error}</p>;
 
