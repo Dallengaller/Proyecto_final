@@ -10,7 +10,7 @@ export const CartProvider = ({ children }) => {
 useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await axios.get('https://proyecto-final-2eg7.onrender.com/cart', {
+        const response = await axios.get('http://localhost:3000/cart', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
@@ -37,7 +37,7 @@ useEffect(() => {
 
   const addToCart = async (movie) => {
     try {
-      const response = await axios.post('http://https://proyecto-final-2eg7.onrender.com/cart', { movie }, {
+      const response = await axios.post('http://localhost:3000/cart', { movie }, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -50,7 +50,7 @@ useEffect(() => {
 
   const removeFromCart = async (movieId) => {
     try {
-      await axios.delete(`http://https://proyecto-final-2eg7.onrender.com/cart/${movieId}`, {
+      await axios.delete(`http://localhost:3000/cart/${movieId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

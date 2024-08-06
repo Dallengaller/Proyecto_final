@@ -7,7 +7,7 @@ const useAuth = () => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('http://https://proyecto-final-2eg7.onrender.com/usuarios/login', { email, password });
+      const response = await axios.post('http://localhost:3000/usuarios/login', { email, password });
       localStorage.setItem('token', response.data.token);
       setLoggedIn(true);
     } catch (error) {
@@ -26,7 +26,7 @@ const useAuth = () => {
 
   const register = async (name, email, password) => {
     try {
-      const response = await axios.post('http://https://proyecto-final-2eg7.onrender.com/usuarios', {
+      const response = await axios.post('http://localhost:3000/usuarios', {
         nombre: name,
         email,
         password
