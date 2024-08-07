@@ -3,6 +3,7 @@ import React from 'react';
 import { Container, Card, ListGroup, Button } from 'react-bootstrap';
 import { useFavorites } from '../context/FavoritesContext';
 import { useNavigate } from 'react-router-dom';
+import '../assets/css/Favoritos.css';
 
 const Favoritos = () => {
   const { favorites, removeFavorite } = useFavorites();
@@ -25,7 +26,11 @@ const Favoritos = () => {
           <p className="text-white">No tienes favoritos agregados.</p>
         ) : (
           favorites.map((favorite, index) => (
-            <Card key={favorite.favoritos_id || index} style={{ width: '18rem', margin: '10px' }}>
+            <Card 
+              key={favorite.favoritos_id || index} 
+              className="card-hover" 
+              style={{ width: '18rem', margin: '10px' }}
+            >
               {favorite.image_url ? (
                 <Card.Img
                   variant="top"

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import useAuth from '../hooks/useAuth';
+import '../assets/css/Login.css';
 
 const Login = () => {
   const { login } = useAuth();
@@ -19,8 +20,8 @@ const Login = () => {
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-      <Form style={{ maxWidth: '400px', width: '100%' }}>
+    <Container className="login-container d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+      <Form className="login-form">
         <h2 className="mb-4 text-center text-white">Iniciar Sesión</h2>
         {error && <p className="text-danger">{error}</p>}
         <Form.Group controlId="formBasicEmail" className="mb-3 text-white">
@@ -50,6 +51,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
-////////////////////////////////////

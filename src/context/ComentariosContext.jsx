@@ -7,23 +7,6 @@ const ComentariosContext = createContext();
 export const ComentariosProvider = ({ children }) => {
   const [comentarios, setComentarios] = useState([]);
 
-  // // Función para obtener los comentarios de una película específica
-  // const fetchComentarios = async (id) => {
-  //   if (!id) {
-  //     console.error('Parámetro id inválido o faltante');
-  //     return;
-  //   }
-  //   try {
-  //     const response = await axios.get(`http://localhost:3000/api/comentarios/${id}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem('token')}`,
-  //       },
-  //     });
-  //     setComentarios(response.data);
-  //   } catch (error) {
-  //     console.error('Error al obtener comentarios:', error);
-  //   }
-  // };
   const fetchComentarios = async (id) => {
     if (!id) {
       console.error('Parámetro id inválido o faltante');
@@ -42,27 +25,6 @@ export const ComentariosProvider = ({ children }) => {
     }
   };
 
-  // // Función para agregar un comentario
-  // const addComentario = async (id, comentario) => {
-  //   if (!id || !comentario) {
-  //     console.error('Parámetros id y comentario son obligatorios');
-  //     return;
-  //   }
-  //   try {
-  //     await axios.post(`http://localhost:3000/api/comentarios/${id}`, 
-  //       { comentario },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem('token')}`,
-  //         },
-  //       }
-  //     );
-  //     // Refresca los comentarios después de agregar uno nuevo
-  //     fetchComentarios(id);
-  //   } catch (error) {
-  //     console.error('Error al agregar comentario:', error);
-  //   }
-  // };
   const addComentario = async (id, comentario) => {
     if (!id || !comentario) {
       console.error('Parámetros id y comentario son obligatorios');
@@ -78,7 +40,6 @@ export const ComentariosProvider = ({ children }) => {
           },
         }
       );
-      // Refresca los comentarios después de agregar uno nuevo
       fetchComentarios(id);
     } catch (error) {
       console.error('Error al agregar comentario:', error);

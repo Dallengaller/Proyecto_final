@@ -4,7 +4,7 @@ import { agregarComentario, obtenerComentarios } from '../controllers/comentario
 
 const router = express.Router();
 
-// Middleware para validar el parámetro :id
+
 const validarId = (req, res, next) => {
   const id = req.params.id;
   if (!id || isNaN(id) || id <= 0) {

@@ -1,19 +1,4 @@
-// // / src/database/dbconfig.js
-// import pkg from 'pg';
-// const { Pool } = pkg;
-
-// const pool = new Pool({
-//   user: 'postgres',
-//   host: 'localhost',
-//   database: 'Proyecto_DB',
-//   password: '123',
-//   port: 5432,
-// });
-
-// export default pool;
-
-// Con variable de entorno.
-// /src/database/dbconfig.js
+// src/database/dbconfig.js
 import pkg from 'pg';
 const { Pool } = pkg;
 import dotenv from 'dotenv';

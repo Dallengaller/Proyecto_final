@@ -1,11 +1,11 @@
 // src/controllers/tituloController.js
 import pool from '../database/dbconfig.js';
 
-// Función para crear un nuevo título
-const crearTitulo = async (req, res) => {
-  const { nombre, precio, movie_id } = req.body;  // Agregar movie_id
 
-  if (!nombre || !precio || !movie_id) {  // Validar movie_id
+const crearTitulo = async (req, res) => {
+  const { nombre, precio, movie_id } = req.body;  
+
+  if (!nombre || !precio || !movie_id) {  
     return res.status(400).json({ message: 'Nombre, precio y movie_id son obligatorios' });
   }
 
@@ -20,7 +20,7 @@ const crearTitulo = async (req, res) => {
   }
 };
 
-// Función para obtener un título por su nombre
+
 const obtenerTitulo = async (req, res) => {
   const { nombre } = req.params;
 
@@ -42,4 +42,3 @@ const obtenerTitulo = async (req, res) => {
 
 export { crearTitulo, obtenerTitulo };
 
-////////// ESTE CODIGO DE ARRIBA FUNCIONA //////

@@ -58,12 +58,10 @@ export const loginUsuario = async (req, res) => {
     const { email, password } = req.body;
     const user = await verificarCredenciales(email, password);
 
-    // Obtener el perfil_id
     const perfilIdQuery = 'SELECT perfil_id FROM perfil WHERE user_id = $1';
     const perfilIdResult = await pool.query(perfilIdQuery, [user.id]);
     const perfil_id = perfilIdResult.rows[0]?.perfil_id || null;
 
-    // Incluir perfil_id en el token
     const token = jwt.sign(
       { email: user.email, id: user.id, perfil_id },
       SECRET_KEY,

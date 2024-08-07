@@ -5,8 +5,8 @@ import { authenticateToken } from '../middleware/authenticateToken.js';
 
 const router = express.Router();
 
-router.get('/', authenticateToken, getFavorites); // Obtener favoritos
-router.post('/', authenticateToken, addFavorite); // Agregar favorito
-router.delete('/:movieID', authenticateToken, removeFavorite); // Eliminar favorito
+router.get('/', authenticateToken, getFavorites); 
+router.post('/', authenticateToken, addFavorite); 
+router.delete('/:movieID', authenticateToken, removeFavorite); 
 
 export default router;

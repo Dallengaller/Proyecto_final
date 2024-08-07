@@ -2,7 +2,7 @@
 import express from 'express';
 const router = express.Router();
 
-// Controlador para agregar un ítem al carrito
+
 router.post('/', (req, res) => {
   const { movie } = req.body;
  
@@ -10,7 +10,7 @@ router.post('/', (req, res) => {
   res.status(200).send(addedMovie);
 });
 
-// Controlador para eliminar un ítem del carrito
+
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
   

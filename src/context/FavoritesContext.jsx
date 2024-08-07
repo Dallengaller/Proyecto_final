@@ -14,7 +14,7 @@ export const FavoritesProvider = ({ children }) => {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      // Verifica la estructura de los datos aquí
+      
       console.log('Favorites fetched:', response.data);
 
       setFavorites(response.data);
@@ -37,7 +37,7 @@ export const FavoritesProvider = ({ children }) => {
           },
         }
       );
-      // Refresca los favoritos después de agregar uno nuevo
+      
       fetchFavorites();
     } catch (error) {
       console.error('Error adding favorite:', error);
@@ -51,7 +51,7 @@ export const FavoritesProvider = ({ children }) => {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      // Refresca los favoritos después de eliminar uno
+      
       fetchFavorites();
     } catch (error) {
       console.error('Error removing favorite:', error);

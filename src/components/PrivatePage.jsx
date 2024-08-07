@@ -13,5 +13,4 @@ const PrivatePage = () => {
 
 export default PrivatePage;
 
-
 ////////////////////////////////////

@@ -1,10 +1,10 @@
 // src/controllers/favoritesController.js
 import pool from '../database/dbconfig.js';
 
-// Obtener los favoritos del usuario
+
 
 const getFavorites = async (req, res) => {
-  const perfil_id = req.user.perfil_id; // Asegúrate de que perfil_id está en el token JWT
+  const perfil_id = req.user.perfil_id; 
 
   try {
     const query = `
@@ -24,11 +24,11 @@ const getFavorites = async (req, res) => {
 
 
 const addFavorite = async (req, res) => {
-  const { nombre, poster } = req.body; // Asegúrate de que 'poster' esté en el cuerpo de la solicitud
-  const perfil_id = req.user.perfil_id; // Obtén perfil_id del token JWT
+  const { nombre, poster } = req.body; 
+  const perfil_id = req.user.perfil_id; 
 
   try {
-    // Obtén el ID del título basado en el nombre
+    
     const titleQuery = 'SELECT titulo_id, movie_id FROM titulo WHERE nombre = $1';
     const titleResult = await pool.query(titleQuery, [nombre]);
 
@@ -38,7 +38,7 @@ const addFavorite = async (req, res) => {
 
     const { titulo_id, movie_id } = titleResult.rows[0];
 
-    // Inserta el favorito en la base de datos con el poster URL
+    
     const query = `
       INSERT INTO favoritos (perfil_id, titulo_id, movie_id, image_url)
       VALUES ($1, $2, $3, $4)
@@ -53,13 +53,13 @@ const addFavorite = async (req, res) => {
   }
 };
 
-// Eliminar un título de favoritos
+
 const removeFavorite = async (req, res) => {
-  const movieID = req.params.movieID; // Recibe el movieID como parámetro en la ruta
-  const perfil_id = req.user.perfil_id; // Obtén perfil_id del token JWT
+  const movieID = req.params.movieID; 
+  const perfil_id = req.user.perfil_id; 
 
   try {
-    // Obtén el ID del título basado en movieID
+    
     const titleQuery = 'SELECT titulo_id FROM titulo WHERE movie_id = $1';
     const titleResult = await pool.query(titleQuery, [movieID]);
 
@@ -69,7 +69,7 @@ const removeFavorite = async (req, res) => {
 
     const titulo_id = titleResult.rows[0].titulo_id;
 
-    // Elimina el favorito de la base de datos
+    
     const query = 'DELETE FROM favoritos WHERE titulo_id = $1 AND perfil_id = $2';
     const values = [titulo_id, perfil_id];
     const result = await pool.query(query, values);

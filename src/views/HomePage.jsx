@@ -1,22 +1,20 @@
 // src/views/HomePage.jsx
 import React, { useState, useEffect } from 'react';
-import { Container, Card, ListGroup, Form, Row, Col } from 'react-bootstrap';
+import { Container, Card, ListGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { fetchMovies } from '../services/movieApi';
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
-  const [filteredMovies, setFilteredMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [genre, setGenre] = useState('');
-  const [year, setYear] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     const getMovies = async () => {
       try {
-        const data = await fetchMovies('Star Wars');
+        
+        const data = await fetchMovies();
         setMovies(data);
         setLoading(false);
       } catch (error) {
@@ -28,66 +26,18 @@ const HomePage = () => {
     getMovies();
   }, []);
 
-  useEffect(() => {
-    const applyFilters = () => {
-      let filtered = movies;
-
-      if (genre) {
-        filtered = filtered.filter(movie => movie.Genre && movie.Genre.toLowerCase().includes(genre.toLowerCase()));
-      }
-      
-
-      if (year) {
-        filtered = filtered.filter(movie => movie.Year && movie.Year === year);
-      }
-
-      setFilteredMovies(filtered.slice(0, 10));
-    };
-
-    applyFilters();
-  }, [genre, year, movies]);
-
   const handleVerMas = (id) => {
     navigate(`/title/${id}`);
   };
 
   return (
     <Container className="text-center">
-      <h1 className="pt-5 text-white">Página principal</h1>
-      <Form>
-        <Row className="justify-content-center mb-4 text-white">
-          <Col xs={6} md={3}>
-            <Form.Group controlId="genreSelect">
-              <Form.Label>Filtrar por Género</Form.Label>
-              <Form.Control as="select" value={genre} onChange={(e) => setGenre(e.target.value)}>
-                <option value="">Todos</option>
-                <option value="Action">Acción</option>
-                <option value="Drama">Drama</option>
-                <option value="Comedy">Comedia</option>
-                <option value="Animation">Animación</option>
-                <option value="Horror">Horror</option>
-                
-              </Form.Control>
-            </Form.Group>
-          </Col>
-          <Col xs={6} md={3}>
-            <Form.Group controlId="yearInput">
-              <Form.Label>Filtrar por Año</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Por ejemplo, 2020"
-                value={year}
-                onChange={(e) => setYear(e.target.value)}
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-      </Form>
+      <h1 className="pt-5 text-white">Peliculas / Series</h1>
       {loading && <p>Cargando...</p>}
       {error && <p>{error}</p>}
       <div className="d-flex flex-wrap justify-content-center">
-        {filteredMovies.length > 0 ? (
-          filteredMovies.map((movie) => (
+        {movies.length > 0 ? (
+          movies.map((movie) => (
             <Card key={movie.imdbID} style={{ width: '18rem', margin: '10px' }}>
               <Card.Img
                 variant="top"
@@ -112,7 +62,7 @@ const HomePage = () => {
             </Card>
           ))
         ) : (
-          <p>No se encontraron películas que coincidan con los filtros seleccionados.</p>
+          <p>No se encontraron películas.</p>
         )}
       </div>
     </Container>
@@ -120,7 +70,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
-
-
-////////////////////////////////////

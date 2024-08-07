@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import Navigation from './components/Navbar';
 import HomePage from './views/HomePage';
 import Favoritos from './views/Favoritos';
-import Categorias from './views/Categorias';
+// import Categorias from './views/Categorias';
 import Carrito from './views/Carrito';
 import NotFound from './views/NotFound';
 import TitleDetails from './views/TitleDetails';
@@ -28,7 +28,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={isAuthenticated() ? <HomePage /> : <Login />} />
             <Route path="/favoritos" element={isAuthenticated() ? <Favoritos /> : <Login />} />
-            <Route path="/categorias" element={isAuthenticated() ? <Categorias /> : <Login />} />
+            {/* <Route path="/categorias" element={isAuthenticated() ? <Categorias /> : <Login />} /> */}
             <Route path="/carrito" element={isAuthenticated() ? <Carrito /> : <Login />} />
             <Route path="/title/:id" element={isAuthenticated() ? <TitleDetails /> : <Login />} />
             <Route path="/comentarios/:id" element={isAuthenticated() ? <Comentarios /> : <Login />} />

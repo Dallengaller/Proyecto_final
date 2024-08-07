@@ -1,0 +1,13 @@
+/* src/components/Login.css */
+.login-container {
+    background: url('../img/login_img.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff; 
+  }
+  
+  .login-form {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 2rem;
+    border-radius: 10px;
+  }
+  

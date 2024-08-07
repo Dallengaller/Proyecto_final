@@ -5,19 +5,12 @@ import { useParams } from 'react-router-dom';
 import { useComentarios } from '../context/ComentariosContext';
 
 const Comentarios = () => {
-  // const { movie_id } = useParams();
   const { id } = useParams();
 
   const { comentarios, addComentario, fetchComentarios } = useComentarios();
   const [nuevoComentario, setNuevoComentario] = useState('');
   const [mensaje, setMensaje] = useState('');
 
-  // useEffect(() => {
-  //   if (movie_id) {
-  //     fetchComentarios(movie_id);
-  //   }
-  // }, [movie_id, fetchComentarios])
-  
   useEffect(() => {
     if (id) {
       fetchComentarios(id);

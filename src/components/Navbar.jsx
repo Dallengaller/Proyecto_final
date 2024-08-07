@@ -44,7 +44,7 @@ const Navigation = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/login'); // Redirige a la página de inicio de sesión
+    navigate('/login');
   };
 
   return (
@@ -56,9 +56,9 @@ const Navigation = () => {
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav className="mx-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
-            <Nav.Link as={Link} to="/" className="text-white ms-3 text-decoration-none">🏠 Home</Nav.Link>
+            <Nav.Link as={Link} to="/" className="text-white ms-3 text-decoration-none">Home</Nav.Link>
             <Nav.Link as={Link} to="/favoritos" className="text-white ms-3 text-decoration-none">Favoritos</Nav.Link>
-            <Nav.Link as={Link} to="/categorias" className="text-white ms-3 text-decoration-none">Categorías</Nav.Link>
+            {/* <Nav.Link as={Link} to="/categorias" className="text-white ms-3 text-decoration-none">Categorías</Nav.Link> */}
             <Nav.Link as={Link} to="/carrito" className="text-white ms-3 text-decoration-none">Carrito</Nav.Link>
           </Nav>
           <Form className="position-relative">
@@ -96,6 +96,3 @@ const Navigation = () => {
 };
 
 export default Navigation;
-
-
-////////////////////////////////////
