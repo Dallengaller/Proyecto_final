@@ -35,7 +35,7 @@ const TitleDetails = () => {
           setPrecio(titulo.precio);
         } else {
           const precioAleatorio = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000;
-          const guardarResponse = await fetch('http://https://proyecto-final-backend-k4ps.onrender.com/api/titulo', {
+          const guardarResponse = await fetch(`http://https://proyecto-final-backend-k4ps.onrender.com/api/titulo`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
