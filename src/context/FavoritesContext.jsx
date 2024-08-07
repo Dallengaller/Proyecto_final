@@ -9,7 +9,7 @@ export const FavoritesProvider = ({ children }) => {
 
   const fetchFavorites = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/favorites', {
+      const response = await axios.get('http://https://proyecto-final-backend-k4ps.onrender.com/favorites', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -29,7 +29,7 @@ export const FavoritesProvider = ({ children }) => {
 
   const addFavorite = async (movie) => {
     try {
-      await axios.post('http://localhost:3000/favorites', 
+      await axios.post('http://https://proyecto-final-backend-k4ps.onrender.com/favorites', 
         { nombre: movie.Title, poster: movie.Poster, movieID: movie.movieID }, 
         {
           headers: {
@@ -46,7 +46,7 @@ export const FavoritesProvider = ({ children }) => {
 
   const removeFavorite = async (movieID) => {
     try {
-      await axios.delete(`http://localhost:3000/favorites/${movieID}`, {
+      await axios.delete(`http://https://proyecto-final-backend-k4ps.onrender.com/favorites/${movieID}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

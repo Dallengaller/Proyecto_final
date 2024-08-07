@@ -23,7 +23,7 @@ const Comentarios = () => {
     if (!nuevoComentario) return;
 
     try {
-      const url = `http://localhost:3000/api/comentarios/${id}`;
+      const url = `http://https://proyecto-final-backend-k4ps.onrender.com/api/comentarios/${id}`;
       const response = await fetch(url, {
         method: 'POST',
         headers: {
