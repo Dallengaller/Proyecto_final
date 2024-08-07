@@ -23,6 +23,7 @@ const Comentarios = () => {
     if (!nuevoComentario) return;
 
     try {
+      const apiUrl = import.meta.env.VITE_API_URL;
       const url = `http://https://proyecto-final-backend-k4ps.onrender.com/api/comentarios/${id}`;
       const response = await fetch(url, {
         method: 'POST',

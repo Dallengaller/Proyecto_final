@@ -28,7 +28,7 @@ const TitleDetails = () => {
 
 
         setIsFavorite(favorites.some(fav => fav.movie_id === data.imdbID));
-
+        const apiUrl = import.meta.env.VITE_API_URL;
         const response = await fetch(`http://https://proyecto-final-backend-k4ps.onrender.com/api/titulo/${data.Title}`);
         if (response.ok) {
           const titulo = await response.json();
