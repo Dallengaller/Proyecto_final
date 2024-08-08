@@ -1,13 +1,14 @@
 // src/hooks/useAuth.js
 import { useState } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config/config';
 
 const useAuth = () => {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const login = async (email, password) => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL;
+      
       const response = await axios.post(`http://https://proyecto-final-backend-k4ps.onrender.com/usuarios/login`, { email, password });
       localStorage.setItem('token', response.data.token);
       setLoggedIn(true);
@@ -27,7 +28,7 @@ const useAuth = () => {
 
   const register = async (name, email, password) => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL;
+      
       const response = await axios.post(`http://https://proyecto-final-backend-k4ps.onrender.com/usuarios`, {
         nombre: name,
         email,

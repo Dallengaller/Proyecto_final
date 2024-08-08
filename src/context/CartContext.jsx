@@ -2,6 +2,8 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 
+import { API_URL } from '../config/config';
+
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
@@ -10,7 +12,7 @@ export const CartProvider = ({ children }) => {
 useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const apiUrl = import.meta.env.VITE_API_URL;
+        
         const response = await axios.get(`http://https://proyecto-final-backend-k4ps.onrender.com/cart`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -38,7 +40,7 @@ useEffect(() => {
 
   const addToCart = async (movie) => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL;
+      
       const response = await axios.post(`http://https://proyecto-final-backend-k4ps.onrender.com/cart`, { movie }, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -52,7 +54,7 @@ useEffect(() => {
 
   const removeFromCart = async (movieId) => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL;
+      
       await axios.delete(`http://https://proyecto-final-backend-k4ps.onrender.com/cart/${movieId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

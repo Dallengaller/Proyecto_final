@@ -1,6 +1,7 @@
 // src/context/FavoritesContext.jsx
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config/config';
 
 export const FavoritesContext = createContext();
 
@@ -9,7 +10,7 @@ export const FavoritesProvider = ({ children }) => {
 
   const fetchFavorites = async () => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL;
+      
       const response = await axios.get(`http://https://proyecto-final-backend-k4ps.onrender.com/favorites`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -30,7 +31,7 @@ export const FavoritesProvider = ({ children }) => {
 
   const addFavorite = async (movie) => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL;
+      
       await axios.post(`http://https://proyecto-final-backend-k4ps.onrender.com/favorites`, 
         { nombre: movie.Title, poster: movie.Poster, movieID: movie.movieID }, 
         {
@@ -48,7 +49,7 @@ export const FavoritesProvider = ({ children }) => {
 
   const removeFavorite = async (movieID) => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL;
+      
       await axios.delete(`http://https://proyecto-final-backend-k4ps.onrender.com/favorites/${movieID}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Form, Button, ListGroup, Alert } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { useComentarios } from '../context/ComentariosContext';
+import { API_URL } from '../config/config';
 
 const Comentarios = () => {
   const { id } = useParams();
@@ -23,7 +24,7 @@ const Comentarios = () => {
     if (!nuevoComentario) return;
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL;
+      
       const url = `http://https://proyecto-final-backend-k4ps.onrender.com/api/comentarios/${id}`;
       const response = await fetch(url, {
         method: 'POST',
