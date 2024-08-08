@@ -8,7 +8,6 @@ import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutline
 import { fetchMovieDetails } from '../services/movieApi';
 import { useFavorites } from '../context/FavoritesContext';
 import { useCart } from '../context/CartContext';
-import { API_URL } from '../config/config';
 
 const TitleDetails = () => {
   const { id } = useParams();
@@ -27,21 +26,21 @@ const TitleDetails = () => {
         const data = await fetchMovieDetails(id);
         setMovie(data);
 
-
-        setIsFavorite(favorites.some(fav => fav.movie_id === data.imdbID));
         
-        const response = await fetch(`http://https://proyecto-final-backend-k4ps.onrender.com/api/titulo/${data.Title}`);
+        setIsFavorite(favorites.some(fav => fav.movie_id === data.imdbID));
+
+        const response = await fetch(`http://localhost:3000/api/titulo/${data.Title}`);
         if (response.ok) {
           const titulo = await response.json();
           setPrecio(titulo.precio);
         } else {
           const precioAleatorio = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000;
-          const guardarResponse = await fetch(`http://https://proyecto-final-backend-k4ps.onrender.com/api/titulo`, {
+          const guardarResponse = await fetch('http://localhost:3000/api/titulo', { 
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ nombre: data.Title, precio: precioAleatorio, movie_id: data.imdbID }),
+            body: JSON.stringify({ nombre: data.Title, precio: precioAleatorio, movie_id: data.imdbID }), 
           });
           if (guardarResponse.ok) {
             setPrecio(precioAleatorio);
@@ -49,7 +48,7 @@ const TitleDetails = () => {
             throw new Error('Error al guardar el título en la base de datos');
           }
         }
-
+        
         setLoading(false);
       } catch (error) {
         setError('Error fetching movie details');
@@ -73,15 +72,15 @@ const TitleDetails = () => {
 
   const handleAddToCart = () => {
     if (!movie || precio === null) return;
-    console.log('Adding to cart:', movie);
-    addToCart({ ...movie, precio });
+    console.log('Adding to cart:', movie); 
+    addToCart({ ...movie, precio }); 
   };
 
 
   const handleCommentsClick = () => {
     navigate(`/comentarios/${id}`);
   };
-
+  
   if (loading) return <p>Cargando detalles de la película...</p>;
   if (error) return <p>{error}</p>;
 
@@ -109,22 +108,22 @@ const TitleDetails = () => {
                 </Card.Body>
               </Card>
               <div className="d-flex justify-content-between align-items-center">
-                <Button
-                  variant={isFavorite ? 'danger' : 'outline-primary'}
-                  onClick={handleFavoriteClick}
+                <Button 
+                  variant={isFavorite ? 'danger' : 'outline-primary'} 
+                  onClick={handleFavoriteClick} 
                   aria-label={isFavorite ? 'Eliminar de favoritos' : 'Agregar a favoritos'}
                 >
                   {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                   {isFavorite ? 'Eliminar de Favoritos' : 'Agregar a Favoritos'}
                 </Button>
-                <Button
-                  variant="primary"
+                <Button 
+                  variant="primary" 
                   onClick={handleAddToCart}
                 >
                   Añadir al Carrito
                 </Button>
-                <Button
-                  variant="secondary"
+                <Button 
+                  variant="secondary" 
                   onClick={handleCommentsClick}
                 >
                   <ChatBubbleOutlineOutlinedIcon /> Comentarios

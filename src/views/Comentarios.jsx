@@ -3,15 +3,21 @@ import React, { useState, useEffect } from 'react';
 import { Container, Form, Button, ListGroup, Alert } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { useComentarios } from '../context/ComentariosContext';
-import { API_URL } from '../config/config';
 
 const Comentarios = () => {
+  // const { movie_id } = useParams();
   const { id } = useParams();
 
   const { comentarios, addComentario, fetchComentarios } = useComentarios();
   const [nuevoComentario, setNuevoComentario] = useState('');
   const [mensaje, setMensaje] = useState('');
 
+  // useEffect(() => {
+  //   if (movie_id) {
+  //     fetchComentarios(movie_id);
+  //   }
+  // }, [movie_id, fetchComentarios])
+  
   useEffect(() => {
     if (id) {
       fetchComentarios(id);
@@ -24,8 +30,7 @@ const Comentarios = () => {
     if (!nuevoComentario) return;
 
     try {
-      
-      const url = `http://https://proyecto-final-backend-k4ps.onrender.com/api/comentarios/${id}`;
+      const url = `http://localhost:3000/api/comentarios/${id}`;
       const response = await fetch(url, {
         method: 'POST',
         headers: {

@@ -1,3 +1,11 @@
+# Resultado final.
+# De forma local funciona correctamente, conecta a la base de datos y es posible registrar un usuario como tambien, agregar favoritos y eliminarlos.
+# De forma desplegada, funciona frontend, backend con conexion exitoso (confirmacion en el log) y base de datos configurada. Pero de igual forma no lee los datos de la base,
+# Al parecer es un problema con los direccionamientos de render, puesto que al levantar el servidor en vscode, desde render, la app funciona igual que de forma local.
+# He dejado de la mejor forma funcionando.
+
+
+
 # https://proyecto-final-2eg7.onrender.com
 # Por el momento se esta resolviendo la conexion con la base de datos y backend en el deploy.
 # Se ha creado una app en react.
@@ -33,3 +41,4 @@
 # Se ha integrado la aplicacion.
 
 # Se esta trabajando en mejorar el diseno e implementacion de comentarios.
+

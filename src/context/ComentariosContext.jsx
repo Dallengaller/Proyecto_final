@@ -1,7 +1,6 @@
 // src/context/ComentariosContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
-import { API_URL } from '../config/config';
 
 const ComentariosContext = createContext();
 
@@ -14,8 +13,7 @@ export const ComentariosProvider = ({ children }) => {
       return;
     }
     try {
-      
-      const response = await axios.get(`http://https://proyecto-final-backend-k4ps.onrender.com/api/comentarios/${encodeURIComponent(id)}`, {
+      const response = await axios.get(`http://localhost:3000/api/comentarios/${encodeURIComponent(id)}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json',
@@ -33,8 +31,7 @@ export const ComentariosProvider = ({ children }) => {
       return;
     }
     try {
-      
-      await axios.post(`http://https://proyecto-final-backend-k4ps.onrender.com/api/comentarios/${encodeURIComponent(id)}`, 
+      await axios.post(`http://localhost:3000/api/comentarios/${encodeURIComponent(id)}`, 
         { comentario },
         {
           headers: {
